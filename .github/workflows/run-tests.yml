@@ -1,4 +1,4 @@
-name: e2e tests
+name: run tests
 
 # on change to test files
 # on:
@@ -10,7 +10,7 @@ name: e2e tests
 # schedule run
 on:
   schedule: 
-    - cron: "30 8 * * 1"   # <=== Change this value
+    - cron: "30 9 * * 1"   # <=== Change this value
   workflow_dispatch:
 
 # manual run
