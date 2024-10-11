@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('test3', async ({ page }) => {
+test('user can send seller application', async ({ page }) => {
   const email = `Test${Date.now()}@etest.com`;
   const phoneNumber = '1223441242';
   await page.goto('https://shopdemo-alex-hot.koyeb.app/sell');
