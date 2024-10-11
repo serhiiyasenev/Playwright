@@ -4,7 +4,6 @@ test('contact-pass', async ({ page }) => {
   const email = `Test${Date.now()}@test.com`;
   await page.goto('https://shopdemo-alex-hot.koyeb.app/');
   await page.getByRole('link', { name: 'Contact Us' }).nth(1).click();
-  await page.getByPlaceholder('You Full Name').click();
   await page.getByPlaceholder('You Full Name').fill('Test');
   await page.getByPlaceholder('Your Email Address').fill(email);
   await page.getByPlaceholder('Please Describe Your Message').fill('Hello my first test from Playwright');
@@ -16,7 +15,6 @@ test('contact-fail', async ({ page }) => {
   const email = `Test2@test.com`;
   await page.goto('https://shopdemo-alex-hot.koyeb.app/');
   await page.getByRole('link', { name: 'Contact Us' }).nth(1).click();
-  await page.getByPlaceholder('You Full Name').click();
   await page.getByPlaceholder('You Full Name').fill('Test');
   await page.getByPlaceholder('Your Email Address').fill(email);
   await page.getByPlaceholder('Please Describe Your Message').fill('Hello my first test from Playwright');
