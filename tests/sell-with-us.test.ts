@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('user can send seller application', async ({ page }) => {
   const email = `Test${Date.now()}@etest.com`;
   const phoneNumber = '1223441242';
-  await page.goto('https://shopdemo-alex-hot.koyeb.app/sell');
+  await page.goto('https://shopdemo-alex-hot.koyeb.app/sell', { waitUntil: 'domcontentloaded' });
   await page.getByPlaceholder('Your Full Name').fill('Test Username');
   await page.getByPlaceholder('Your Email Address').fill(email);
   await page.getByPlaceholder('Your Phone Number').fill(phoneNumber);

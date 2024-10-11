@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('contact-pass', async ({ page }) => {
   const email = `Test${Date.now()}@test.com`;
-  await page.goto('https://shopdemo-alex-hot.koyeb.app/');
+  await page.goto('https://shopdemo-alex-hot.koyeb.app/', { waitUntil: 'domcontentloaded'});
   await page.getByRole('link', { name: 'Contact Us' }).nth(1).click();
   await page.getByPlaceholder('You Full Name').fill('Test');
   await page.getByPlaceholder('Your Email Address').fill(email);
@@ -13,7 +13,7 @@ test('contact-pass', async ({ page }) => {
 
 test('contact-fail', async ({ page }) => {
   const email = `Test2@test.com`;
-  await page.goto('https://shopdemo-alex-hot.koyeb.app/');
+  await page.goto('https://shopdemo-alex-hot.koyeb.app/', { waitUntil: 'domcontentloaded' });
   await page.getByRole('link', { name: 'Contact Us' }).nth(1).click();
   await page.getByPlaceholder('You Full Name').fill('Test');
   await page.getByPlaceholder('Your Email Address').fill(email);
