@@ -7,6 +7,10 @@ on:
         description: 'Part of the test name to run'
         required: false
         default: ''
+      workersCount:
+        description: 'Workers Count'
+        required: false
+        default: '1'
 
 jobs:
   e2e:
@@ -25,8 +29,8 @@ jobs:
     - name: Running e2e tests with optional filter
       run: |
         if [ "${{ github.event.inputs.testName }}" != "" ]; then
-          echo "Running tests filtered by name: ${{ github.event.inputs.testName }}"
-          npx playwright test --grep "${{ github.event.inputs.testName }}"
+          echo "Running tests filtered by name: ${{ github.event.inputs.testName }} and workes count = ${{ github.event.inputs.workersCount}}"
+          npx playwright test --grep "${{ github.event.inputs.testName }}" --workers=${{ github.event.inputs.workersCount}}"
         else
           echo "Running all tests"
           npx playwright test
