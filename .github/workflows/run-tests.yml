@@ -1,21 +1,12 @@
 name: run tests
 
-# on change to test files
-# on:
-#   push:
-#     branches: [ main, master ]
-#   pull_request:
-#     branches: [ main, master ]
-
-# schedule run
 on:
-  #schedule: 
-  #  - cron: "30 9 * * 1"   # <=== Change this value
   workflow_dispatch:
-
-# manual run
-# on:
-#  workflow_dispatch:  
+    inputs:
+      testName:
+        description: 'Part of the test name to run'
+        required: false
+        default: ''
 
 jobs:
   e2e:
@@ -27,10 +18,20 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.48.0
     steps:
     - uses: actions/checkout@v4
-    - name: install deps
+    
+    - name: Install dependencies
       run: npm ci
-    - name: running e2e tests
-      run: npx playwright test
+
+    - name: Running e2e tests with optional filter
+      run: |
+        if [ "${{ github.event.inputs.testName }}" != "" ]; then
+          echo "Running tests filtered by name: ${{ github.event.inputs.testName }}"
+          npx playwright test --grep "${{ github.event.inputs.testName }}"
+        else
+          echo "Running all tests"
+          npx playwright test
+        fi
+    
     - uses: actions/upload-artifact@v4
       if: always()
       with:
