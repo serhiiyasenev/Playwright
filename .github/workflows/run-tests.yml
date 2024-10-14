@@ -9,8 +9,8 @@ name: run tests
 
 # schedule run
 on:
-  schedule: 
-    - cron: "30 9 * * 1"   # <=== Change this value
+  #schedule: 
+  #  - cron: "30 9 * * 1"   # <=== Change this value
   workflow_dispatch:
 
 # manual run
