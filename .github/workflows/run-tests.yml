@@ -27,13 +27,23 @@ jobs:
       run: npm ci
 
     - name: Running e2e tests with optional filter
+      env:
+        TEST_NAME: ${{ inputs.testName }}
+        WORKERS_COUNT: ${{ inputs.workersCount }}
+      shell: bash
       run: |
-        if [ "${{ github.event.inputs.testName }}" != "" ]; then
-          echo "Running tests filtered by name: '${{ github.event.inputs.testName }}' and workers count = ${{ github.event.inputs.workersCount }}"
-          npx playwright test --grep "${{ github.event.inputs.testName }}" --workers=${{ github.event.inputs.workersCount}}
+        set -euo pipefail
+        if [[ ! "$WORKERS_COUNT" =~ ^[1-9][0-9]*$ ]] || (( WORKERS_COUNT > 16 )); then
+          echo "workersCount must be between 1 and 16" >&2
+          exit 1
+        fi
+
+        if [[ -n "$TEST_NAME" ]]; then
+          echo "Running filtered tests with $WORKERS_COUNT workers"
+          npx playwright test --grep "$TEST_NAME" --workers "$WORKERS_COUNT"
         else
-          echo "Running all tests with workers count = ${{ github.event.inputs.workersCount }}"
-          npx playwright test --workers=${{ github.event.inputs.workersCount}}
+          echo "Running all tests with $WORKERS_COUNT workers"
+          npx playwright test --workers "$WORKERS_COUNT"
         fi
     
     - uses: actions/upload-artifact@v4
